@@ -10,6 +10,8 @@ const app = express();
 // connect to mongoose
 mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/workout", {
   useNewUrlParser: true,
+  useUnifiedTopolgy: true,
+  useCreateIndex: true,
   useFindAndModify: false
 });
 
@@ -24,9 +26,9 @@ app.use(express.json());
 app.use(express.static("public"));
 
 // routes
-// app.get("/", (req, res) => {
-    // response.send("Hello World");
-// });
+app.get("/", (req, res) => {
+    response.send("Hello World");
+});
 app.use(require("./routes/api-routes"));
 app.use(require("./routes/html-routes"));
 
