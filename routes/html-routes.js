@@ -1,6 +1,8 @@
 const path = require("path");
+console.log("HTML ROUTES");
 
-module.exports = function(app) {
+module.exports = (app) => {
+
     app.get("/", function (req, res) {
         res.sendFile(path.join(__dirname, "../public/index.html"));
     });
