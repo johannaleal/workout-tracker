@@ -19,35 +19,27 @@ const router = require("express").Router();
       .catch(err => res.json(err))
   });
 
+  // Update route to update an existing workout
+  router.put("/api/workouts/:id", (req, res) => {
+    // Add code here to update a list using the values in req.body, where the id is equal to
+    // req.body.id and return the result to the user using res.json
+    db.Workout.findByIdAndUpdate(
+      req.params.id, 
+      {$push: {exercises: req.body}},
+      {new: true}
+    )
+    .then(workout => res.json(workout))
+    .catch(err => res.json(err))
+  });
 
-//   // Get route for retrieving a workout
-//   app.get("/api/workouts/:id", (req, res) => {
-//     // Add sequelize code to find a single workout where the id is equal to req.params.id,
-//     // return the result to the user with res.json
-//     db.Workout.findOne({
-//       where: {
-//         id: req.params.id
-//       }
-//     }).then(result => res.json(result));
-//   });
-
-//   
-
-//   // Update route to update an existing list
-//   app.put("/api/lists", (req, res) => {
-//     // Add code here to update a list using the values in req.body, where the id is equal to
-//     // req.body.id and return the result to the user using res.json
-//     db.List.update(
-//       {
-//         title: req.body.title
-//       },
-//       {
-//         where: {
-//           id: req.body.id
-//         }
-//       }
-//     ).then(dbList => res.json(dbList));
-//   });
+  // Get route for retrieving a workout
+  router.get("/api/workouts/range", (req, res) => {
+    // Add sequelize code to find a single workout where the id is equal to req.params.id,
+    // return the result to the user with res.json
+    db.Workout.find({})
+      .then(workouts => res.json(workouts))
+      .catch(err => res.json(err))
+  });
 
 //   // Delete route for deleting a list
 //   app.delete("/api/lists/:id", (req, res) => {
