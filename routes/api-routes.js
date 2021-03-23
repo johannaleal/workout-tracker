@@ -1,53 +1,48 @@
-// Requiring our models and passport as we've configured it
+// Require models and router
 const db = require("../models");
 const router = require("express").Router();
 
-  // Get route for retrieving all workouts
-  router.get("/api/workouts", (req, res) => {
-    // Add sequelize code to find all workouts, and return them to the user with res.json
-    db.Workout.find()
-      .then(workouts => {res.json(workouts)})
-      .catch(err => res.json(err))
-  });
+// GET route for retrieving the last workout
+router.get("/api/workouts", async (req, res) => {
+  try {
+    const workouts = await db.Workout.aggregate([
+      {
+        $addFields: {
+          totalDuration: { $sum: "$exercises.duration" },
+        },
+      },
+    ]);
+
+    res.json(workouts);
+  }
+  catch {
+    res.json(err);
+  }
+});
   
-  // POST route for saving a new workout
-  router.post("/api/workouts", (req, res) => {
-    // Add sequelize code for creating a post using req.body,
-    // then return the result using res.json
-    db.Workout.create(req.body)
-      .then(newWorkout => res.json(newWorkout))
-      .catch(err => res.json(err))
-  });
-
-  // Update route to update an existing workout
-  router.put("/api/workouts/:id", (req, res) => {
-    // Add code here to update a list using the values in req.body, where the id is equal to
-    // req.body.id and return the result to the user using res.json
-    db.Workout.findByIdAndUpdate(
-      req.params.id, 
-      {$push: {exercises: req.body}},
-      {new: true}
-    )
-    .then(workout => res.json(workout))
+// POST route for saving a new workout
+router.post("/api/workouts", (req, res) => {
+  db.Workout.create(req.body)
+    .then(newWorkout => res.json(newWorkout))
     .catch(err => res.json(err))
-  });
+});
 
-  // Get route for retrieving a workout
-  router.get("/api/workouts/range", (req, res) => {
-    // Add sequelize code to find a single workout where the id is equal to req.params.id,
-    // return the result to the user with res.json
-    db.Workout.find({})
-      .then(workouts => res.json(workouts))
-      .catch(err => res.json(err))
-  });
+// PUT route to update an existing workout
+router.put("/api/workouts/:id", (req, res) => {
+  db.Workout.findByIdAndUpdate(
+    req.params.id, 
+    {$push: {exercises: req.body}},
+    {new: true}
+  )
+  .then(workout => res.json(workout))
+  .catch(err => res.json(err))
+});
 
-//   // Delete route for deleting a list
-//   app.delete("/api/lists/:id", (req, res) => {
-//     db.List.destroy({
-//       where: {
-//         id: req.params.id
-//       }
-//     }).then(dbList => res.json(dbList));
-//   });
+// GET route for retrieving a range of workouts
+router.get("/api/workouts/range", (req, res) => {
+  db.Workout.find({})
+    .then(workouts => res.json(workouts))
+    .catch(err => res.json(err))
+});
 
 module.exports = router;
