@@ -38,11 +38,27 @@ router.put("/api/workouts/:id", (req, res) => {
   .catch(err => res.json(err))
 });
 
-// GET route for retrieving a range of workouts
-router.get("/api/workouts/range", (req, res) => {
-  db.Workout.find({})
-    .then(workouts => res.json(workouts))
-    .catch(err => res.json(err))
+// GET route for retrieving the last seven workouts
+router.get("/api/workouts/range", async (req, res) => {
+    try {
+      const workouts = await db.Workout.aggregate([
+        {
+          $addFields: {
+            totalDuration: { $sum: "$exercises.duration" },
+          },
+        },
+      ])
+      .sort({day: -1})
+      .limit(7)
+      .sort({day: 1});
+      res.send(workouts);
+  
+     // res.json(workouts);
+    }
+    catch {
+      res.json(err);
+    }
+
 });
 
 module.exports = router;
