@@ -4,7 +4,16 @@
 
 ## Description
 
-In this project, I created an application that logs burgers entered and devoured by the user. The technologies used include Node, Express, Handlebars, MySQL, and ORM. It is depoyed on Heroku using a JAWSDB MySQL database.
+In this project, I created a workout tracker app where a user will be able to track daily workouts. A user can do the following:
+
+* Create and view a daily workout
+* Add multiple exercises to the most recent workout plan
+* Add new exercises to a new workout plan
+* Track the name, type, weight, sets, reps, and duration of an exercise. If the exercise is a cardio exercise, it will track the distance traveled.
+* View the combined weight of multiple exercises from the past seven workouts on a statistics page
+* View the total duration of each workout from the past seven workouts on a statistics page
+
+This application uses a Mongo database with a Mongoose schema and handles routes with Express.
 
 ## Table of Contents
 
@@ -15,7 +24,6 @@ In this project, I created an application that logs burgers entered and devoured
 * [Code Repository](#repository)
 * [License](#license)
 * [Contributing](#contributing)
-* [Tests](#tests)
 * [Questions](#questions)
 
 ## Installation
@@ -24,14 +32,13 @@ In this project, I created an application that logs burgers entered and devoured
 2. Install node.js. It can be downloaded here: [node.js Downloads](https://nodejs.org/en/download/)
 3. Initialize npm:
     >npm init -y
-4. Install Express npm package:
+4. Install npm:
+    >npm install
+5. Install Express npm package:
     >npm install express
-5. Install MySQL npm package:
-    >npm insall mysql
-6. Install Handlebars npm package:
-    >npm insall express-handlebars
-7. Run the SQL located in /db/schema.sql in MySQL to create the database and then /db/seeds.sql to populate the table.
-8. If you are going to run the app locally, update the connection information in the /config/connection.js file to reflect your MySQL credentials.
+6. Install MongoDB.
+7. Create a workout database in MongoDB.
+8. Run the /seeders/seed.js file to populate the database.
 
 ## Usage
 
@@ -39,26 +46,31 @@ To run this app:
 
 1. Open the console in the directory where the server.js file is located and run the following command:
     >node server
-2. Enter the name of a burger in the textarea and click on __Submit__. It will then display on the left-hand side under the _Burgers You Can Eat_ section.
-3. Click on the __Devour It!__ button next to a burger. It will be removed from the left-hand side section and will be listed on the right-hand side section titled _Burgers You've Eaten_.
+2. Click on _Continue Workout_ to add an exercise to the last workout entered.
+3. Click on _New Workout_ to start a new workout plan.
+4. Click on the _Dashboard_ link on the upper left corner of the blue navigation bar to see your workout statistics.
 
 ## Screenshots
 
-### Index Page with No Burgers Devoured
+### Index Page
 
-![Eat-Da-Burger Home Screen with No Burgers Devoured](./public/assets/img/screenshot1.PNG)
+![Index Page](./assets/index.png)
 
-### Index Page with Burgers Devoured
+### Add Exercise Page
 
-![Eat-Da-Burger Home Screen with Burgers Devoured](./public/assets/img/screenshot2.PNG)
+![Add Exercise Page](./assets/add-exercise.png)
+
+### Statistics Page
+
+![Statistics Page](./assets/stats.png)
 
 ## Website
 
-[Deployed Website](https://burger-johanna.herokuapp.com/)
+[Deployed Website](https://workout-tracker-johanna.herokuapp.com/)
 
 ## Repository
 
-[Code Repository](https://github.com/johannaleal/burger)
+[Code Repository](https://github.com/johannaleal/workout-tracker)
 
 ## License
 
@@ -67,16 +79,6 @@ This application is covered under license: MIT License.
 ## Contributing
 
 If you would like to contribute to this repository, please contact me via the email below to discuss the changes you wish to make.
-
-## Tests
-
-To test this application:
-
-1. Run the application in your terminal by typing:
-    > node start.js
-2. Create a new burger and verify that it is listed under the _Burgers You Can Eat_ section and that a __Devour It!__ button displays next to it.
-3. Click on the __Devour It!__ button next to a burger under the _Burgers You Can Eat_ section and verify that it is removed from there and appears under the _Burgers You've Eaten_ section.
-4. After adding and devouriung burgers, verify that your changes are reflected in the MySQL burgers database.
 
 ## Questions
 
